@@ -1,7 +1,7 @@
 from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticated
-from .serializers import EventSerializer, CommentSerializer, NewEventSerializer
-from .models import Event, Comment
+from .serializers import EventSerializer, CommentSerializer, NewEventSerializer, TagSerializer
+from .models import Event, Comment, Tag
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -21,5 +21,14 @@ class CommentViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('event__id',)
     permission_classes = (IsAuthenticated,)
+
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('event__id',)
+    permission_classes = (IsAuthenticated,)
+
 
 
