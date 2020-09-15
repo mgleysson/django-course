@@ -2,6 +2,14 @@ from django.db import models
 from django.utils import timezone
 
 
+class Tag(models.Model):
+    title = models.CharField(max_length=50)
+    information = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
+
+
 class Event(models.Model):
     event = models.CharField(max_length=80)
     date = models.DateTimeField()
@@ -12,6 +20,7 @@ class Event(models.Model):
         ('3', 'Muito Urgente')
     )
     priority = models.CharField(max_length=1, choices=priorities_list)
+    tags = models.ManyToManyField(Tag, related_name='tags', blank=True)
 
     def __str__(self):
         return self.event
@@ -23,16 +32,22 @@ class Event(models.Model):
                 return v
         return ''
 
+    class Meta:
+        ordering = ('-date',)
+
 
 class Comment(models.Model):
     author = models.CharField(max_length=80)
     email = models.EmailField()
     text = models.CharField(max_length=160)
     date = models.DateTimeField(default=timezone.now)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='comment_event')
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='comments')
 
     def __str__(self):
         return "{} comentou em {:%c}".format(self.author, self.date)
 
     class Meta:
         ordering = ('-date',)
+
+
+
