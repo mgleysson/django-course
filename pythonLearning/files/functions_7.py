@@ -41,18 +41,19 @@ def print_greetings_2(name, upper_case=False):
 print_greetings_2('Marcos', upper_case=True)
 
 # Escopo de funções
+
 var_1 = 5
 
 
 def local_scope():
     var_2 = 6
-    print('Var 2 Local', var_2)
-    # print(var_1)
     global var_1
+    print('Var 2 Local', var_2)
+    print('Var 1 Global', var_1)
     var_1 = 50
-    print('Var 1 Local', var_1)
+    # print('Var 1 Local', var_1)
 
 
-print('Var 1 Global', var_1)
+print('Before Function Call - Var 1 Global', var_1)
 local_scope()
-print('Var 1 Global', var_1)
+print('After Function Call - Var 1 Global', var_1)

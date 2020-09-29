@@ -8,10 +8,15 @@ As chaves são exclusivas em um dicionário, enquanto os valores podem não ser.
   mas as chaves devem ser de um tipo de dados imutável, como strings, números ou tuplas.
 '''
 
+
 data = {'Name': 'Zara', 'Age': 7, 'Class': 'First'}
 
 print("dict['Name']: ", data['Name'])
 print("dict['Age']: ", data['Age'])
+
+# Pode até gerar um dict com chaves duplicadas, mas o valor será atualizado.
+data = {'Name': 'Zara', 'Age': 7, 'Name': 'First'}
+print(data.get('Name', 'Default'))
 
 # Se tentarmos acessar um item de dados com uma chave, que não faz parte do dicionário, obteremos um erro da seguinte
 # forma
