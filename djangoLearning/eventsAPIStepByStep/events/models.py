@@ -35,3 +35,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.author + ' - ' + str(self.date)
+
+    class Meta:
+        ordering = ('-date',)
