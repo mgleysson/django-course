@@ -12,7 +12,7 @@ class Event(models.Model):
     )
 
     event = models.CharField(max_length=80)
-    date = models.DateField()
+    date = models.DateTimeField()
     priority = models.CharField(max_length=1, choices=priorities_list)
 
     def __str__(self):

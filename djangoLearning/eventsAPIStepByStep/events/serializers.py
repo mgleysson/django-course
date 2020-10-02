@@ -23,4 +23,11 @@ class EventSerializerWithoutComments(serializers.ModelSerializer):
         fields = ('id', 'event', 'date', 'text_priority')
 
 
+class NewEventSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Event
+        fields = ('id', 'event', 'date', 'priority')
+
+
 

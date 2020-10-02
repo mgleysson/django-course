@@ -2,13 +2,17 @@ from django.shortcuts import render
 from rest_framework import viewsets, filters
 
 from .models import Event, Comment
-from .serializers import CommentSerializer, EventSerializerWithComments, EventSerializerWithoutComments
+from .serializers import CommentSerializer, EventSerializerWithComments, EventSerializerWithoutComments, \
+    NewEventSerializer
 
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
-    #serializer_class = EventSerializerWithComments
-    serializer_class = EventSerializerWithoutComments
+
+    def get_serializer_class(self):
+        if self.request.method in ('POST', 'PUT'):
+            return NewEventSerializer
+        return EventSerializerWithoutComments
 
 
 class CommentViewSet(viewsets.ModelViewSet):
