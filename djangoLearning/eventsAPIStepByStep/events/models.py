@@ -18,6 +18,13 @@ class Event(models.Model):
     def __str__(self):
         return self.event
 
+    @property
+    def text_priority(self):
+        for k, v in self.priorities_list:
+            if k == self.priority:
+                return v
+        return ""
+
 
 class Comment(models.Model):
     author = models.CharField(max_length=80)

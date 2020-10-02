@@ -5,7 +5,7 @@ from .models import Event, Comment
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = "__all__"
+        fields = ('id', 'event', 'date', 'text_priority')
 
 
 class CommentSerializer(serializers.ModelSerializer):
