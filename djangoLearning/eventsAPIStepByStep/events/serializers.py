@@ -8,12 +8,19 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ('id', 'author', 'email', 'text', 'date', 'event')
 
 
-class EventSerializer(serializers.ModelSerializer):
+class EventSerializerWithComments(serializers.ModelSerializer):
     comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Event
         fields = ('id', 'event', 'date', 'text_priority', 'comments')
+
+
+class EventSerializerWithoutComments(serializers.ModelSerializer):
+
+    class Meta:
+        model = Event
+        fields = ('id', 'event', 'date', 'text_priority')
 
 
 
