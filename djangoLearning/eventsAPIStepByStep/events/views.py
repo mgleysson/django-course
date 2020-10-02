@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework import viewsets, filters
 
-from .models import Event, Comment
+from .models import Event, Comment, Tag
 from .serializers import CommentSerializer, EventSerializerWithComments, EventSerializerWithoutComments, \
-    NewEventSerializer
+    NewEventSerializer, TagSerializer
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -20,3 +20,8 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     filter_backends = (filters.SearchFilter,)
     search_fields = ("event__id",)
+
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer

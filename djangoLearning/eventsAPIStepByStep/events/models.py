@@ -2,6 +2,17 @@ from django.db import models
 from django.utils import timezone
 
 
+class Tag(models.Model):
+    title = models.CharField(max_length=50)
+    information = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ('-title',)
+
+
 class Event(models.Model):
 
     priorities_list = (
@@ -14,6 +25,7 @@ class Event(models.Model):
     event = models.CharField(max_length=80)
     date = models.DateTimeField()
     priority = models.CharField(max_length=1, choices=priorities_list)
+    tags = models.ManyToManyField(Tag, related_name='tags', blank=True)
 
     def __str__(self):
         return self.event

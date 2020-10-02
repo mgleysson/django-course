@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Event, Comment
+from .models import Event, Comment, Tag
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -20,14 +20,21 @@ class EventSerializerWithoutComments(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ('id', 'event', 'date', 'text_priority')
+        fields = ('id', 'event', 'date', 'text_priority', 'tags')
 
 
 class NewEventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ('id', 'event', 'date', 'priority')
+        fields = ('id', 'event', 'date', 'priority', 'tags')
+
+
+class TagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tag
+        fields = ('id', 'title', 'information')
 
 
 
