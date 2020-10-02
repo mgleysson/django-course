@@ -27,4 +27,4 @@ class Comment(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='comments')
 
     def __str__(self):
-        return self.author + ' - ' + self.date
+        return self.author + ' - ' + str(self.date)
