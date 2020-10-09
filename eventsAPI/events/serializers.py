@@ -16,10 +16,17 @@ class NewCommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ('id',)
 
+class TagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tag
+        fields = '__all__'
+
 
 class EventSerializer(serializers.ModelSerializer):
 
     comments = NewCommentSerializer(many=True, read_only=True)
+    tags = TagSerializer(many=True, read_only=True)
 
     class Meta:
         model = Event
@@ -31,13 +38,6 @@ class NewEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ('id', 'event', 'date', 'priority', 'tags')
-
-
-class TagSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Tag
-        fields = '__all__'
 
 
 
