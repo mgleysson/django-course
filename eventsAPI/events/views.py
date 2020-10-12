@@ -1,6 +1,6 @@
-from django.shortcuts import render
+import datetime
 
-# Create your views here.
+from django.utils import timezone
 from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -14,6 +14,7 @@ class EventViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['event', 'tags__title', 'priority']
     ordering_fields = ['event']
+
     # serializer_class = EventSerializer
 
     def get_serializer_class(self):
@@ -27,6 +28,26 @@ class EventViewSet(viewsets.ModelViewSet):
         response = {'events_count': len(events)}
         return Response(data=response, status=status.HTTP_200_OK)
 
+    @action(methods=['GET'], detail=False)
+    def events_with_tags(self, request):
+        tags = Tag.objects.all()
+        events = Event.objects.filter(tags__in=tags)
+        serializer = self.get_serializer(events, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    @action(methods=['GET'], detail=False)
+    def next_events(self, request):
+        next_time = timezone.now() + datetime.timedelta(days=3)
+        current_time = timezone.now()
+        events = Event.objects.filter(date__lte=next_time, date__gte=current_time)
+        serializer = self.get_serializer(events, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    @action(methods=['GET'], detail=False)
+    def events_2020(self, request):
+        events = Event.objects.filter(date__year=2020)
+        serializer = self.get_serializer(events, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
