@@ -26,7 +26,6 @@ class EventViewSet(viewsets.ModelViewSet):
 
     @action(methods=['GET'], detail=False)
     def stats2(self, request):
-        permission_classes = (IsAdminUser,)
         events = Event.objects.all()
         response = {'events_count': len(events)}
         return Response(data=response, status=status.HTTP_200_OK)

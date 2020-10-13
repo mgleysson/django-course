@@ -19,7 +19,6 @@ class EventsTestCase(TestCase):
                                    date="2020-10-12T10:00:00+03:00", event=e)
         Tag.objects.create(title='DjangoCourse', information='Info')
 
-
     def test_text_priority(self):
         event = Event.objects.get(event="Teste 1")
         self.assertEquals(event.text_priority, "Urgente")
@@ -34,15 +33,15 @@ class EventsTestCase(TestCase):
 
     def test_str_event(self):
         event = Event.objects.get(event="Teste 1")
-        self.assertEquals(event.__str__(), "Teste 1 - 2020-10-09 07:00:00+00:00")
+        self.assertEquals(str(event), "Teste 1 - 2020-10-09 07:00:00+00:00")
 
     def test_str_comment(self):
         comment = Comment.objects.get(text="Teste comentário")
-        self.assertEquals(comment.__str__(), "Marcos - 2020-10-12 07:00:00+00:00")
+        self.assertEquals(str(comment), "Marcos - 2020-10-12 07:00:00+00:00")
 
     def test_str_tag(self):
         tag = Tag.objects.get(title="DjangoCourse")
-        self.assertEquals(tag.__str__(), "DjangoCourse")
+        self.assertEquals(str(tag), "DjangoCourse")
 
 
 class EventViewTests(APITestCase):
