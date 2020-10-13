@@ -3,6 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from events.models import Event, Comment, Tag
@@ -15,6 +16,7 @@ class EventViewSet(viewsets.ModelViewSet):
     search_fields = ['event', 'tags__title', 'priority']
     ordering_fields = ['event']
     # serializer_class = EventSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_serializer_class(self):
         if self.request.method in ('POST', 'PUT'):
@@ -23,6 +25,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
     @action(methods=['GET'], detail=False)
     def stats2(self, request):
+        permission_classes = (IsAdminUser,)
         events = Event.objects.all()
         response = {'events_count': len(events)}
         return Response(data=response, status=status.HTTP_200_OK)

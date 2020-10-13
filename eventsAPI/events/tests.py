@@ -1,5 +1,6 @@
 import unittest
 
+from django.contrib.auth.models import User
 from django.test import TestCase
 
 # Create your tests here.
@@ -31,6 +32,9 @@ class EventViewTests(APITestCase):
 
     def setUp(self):
         Event.objects.create(event="Teste 5", date="2020-10-09", priority="1")
+        User.objects.create_user(username='test', password='test')
+        response = self.client.post("/api-auth-token", {'username': 'test', 'password': 'test'})
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + response.data['token'])
 
     def test_get(self):
         response = self.client.get("/api/v1/events/")
