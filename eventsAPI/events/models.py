@@ -11,6 +11,9 @@ class Tag(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ('title', )
+
 
 class Event(models.Model):
     priority_list = [
@@ -27,6 +30,9 @@ class Event(models.Model):
 
     def __str__(self):
         return self.event + ' - ' + str(self.date)
+
+    class Meta:
+        ordering = ('-date', )
 
     @property
     def text_priority(self):
@@ -45,3 +51,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.author + ' - ' + str(self.date)
+
+    class Meta:
+        ordering = ('-date',)

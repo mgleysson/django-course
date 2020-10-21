@@ -29,23 +29,30 @@ class EventViewSet(viewsets.ModelViewSet):
         return Response(data=response, status=status.HTTP_200_OK)
 
     @action(methods=['GET'], detail=False)
+    def all_events(self, request):
+        events = Event.objects.all()
+        serializer = self.get_serializer(events, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    @action(methods=['GET'], detail=False)
     def events_with_tags(self, request):
         tags = Tag.objects.all()
-        events = Event.objects.filter(tags__in=tags)
+        events = Event.objects.filter(tags__in=tags).distinct()
         serializer = self.get_serializer(events, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     @action(methods=['GET'], detail=False)
     def next_events(self, request):
-        next_time = timezone.now() + datetime.timedelta(days=3)
+        next_time = timezone.now() + datetime.timedelta(days=5)
         current_time = timezone.now()
         events = Event.objects.filter(date__lte=next_time, date__gte=current_time)
         serializer = self.get_serializer(events, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     @action(methods=['GET'], detail=False)
-    def events_2020(self, request):
-        events = Event.objects.filter(date__year=2020)
+    def events_by_year(self, request):
+        year_var = self.request.query_params.get('year')
+        events = Event.objects.filter(date__year=year_var)
         serializer = self.get_serializer(events, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
