@@ -3,6 +3,7 @@ import datetime
 from django.utils import timezone
 from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from events.models import Event, Comment, Tag
@@ -16,6 +17,7 @@ class EventViewSet(viewsets.ModelViewSet):
     ordering_fields = ['event']
 
     # serializer_class = EventSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_serializer_class(self):
         if self.request.method in ('POST', 'PUT'):
